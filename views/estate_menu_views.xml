@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="property_menu_root" name="Estate">
+        <menuitem id="property_first_level_menu" name="Options">
+            <menuitem
+                id="list_property_model_menu_action"
+                action="list_estate_property_model_action"
+            />
+        </menuitem>
+    </menuitem>
+</odoo>

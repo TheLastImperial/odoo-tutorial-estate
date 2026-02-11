@@ -1,0 +1,47 @@
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
+
+from odoo import fields, models
+
+class Property(models.Model):
+    _name = "estate.property"
+    _description = """
+    The Property description to llok if can be sold.
+    """
+
+    name = fields.Char()
+    last_seen = fields.Datetime(
+        "Last Seen",
+        default=fields.Datetime.now
+    )
+    description = fields.Text()
+    postcode = fields.Char()
+    date_availability = fields.Date(
+        default=datetime.today() + relativedelta(months=3), 
+        copy=False
+    )
+    expected_price = fields.Float()
+    selling_price = fields.Float(readonly=True, copy=False)
+    bedrooms = fields.Integer(default=2)
+    living_area = fields.Integer()
+    facades = fields.Integer()
+    active = fields.Boolean(default=True)
+    garage = fields.Boolean()
+    garden = fields.Boolean()
+    garden_area = fields.Integer()
+    garden_orientation = fields.Selection(
+        string='Garden Orientation',
+        selection=[
+            ('north','North'), ('south', 'South'), ('east', 'East'), ('west', 'West')
+        ],
+        help="The garden position view."
+    )
+    state = fields.Selection(
+        string='State',
+        selection=[
+            ('new','New'), ('offer_received', 'Offer Received'),
+            ('offer_accepted', 'Offer Accepted'), ('sold', 'Sold'),
+            ('cancelled', 'Cancelled')
+        ],
+        help="The property's state."
+    )
