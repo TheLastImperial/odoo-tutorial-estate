@@ -40,3 +40,14 @@ class PropertyOffer(models.Model):
                 record.validity = (record.date_deadline - record.create_date.date()).days
             else:
                 record.validity = (record.date_deadline - datetime.now().date()).days
+
+    def action_accept_offer(self):
+        for record in self:
+            record.status = "accepted"
+            record.property_id.bayer_id = record.partner_id
+        return True
+
+    def action_refuse_offer(self):
+        for record in self:
+            record.status = "refused"
+        return True

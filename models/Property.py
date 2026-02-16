@@ -2,6 +2,7 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 class Property(models.Model):
     _name = "estate.property"
@@ -79,3 +80,19 @@ class Property(models.Model):
         else:
            self.garden_area = 0
            self.garden_orientation = None
+
+    def action_cancel_sell(self):
+        for record in self:
+            if record.state == "sold":
+                raise UserError(Exception("The property is selled."))
+            else:
+                record.state = "cancelled"
+        return True
+    
+    def action_sold(self):
+        for record in self:
+            if record.state == "cancelled":
+                raise UserError(Exception("The property is cancelled."))
+            else:
+                record.state = "sold"
+        return True
