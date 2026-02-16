@@ -10,8 +10,8 @@
         <field name="name">estate.property.type.create.view</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
-            <form string="New Property Type">
-                <field name="name" label="Name"/>
+            <form string="Property Type">
+                <field name="name" string="Name"/>
             </form>
         </field>
     </record>
