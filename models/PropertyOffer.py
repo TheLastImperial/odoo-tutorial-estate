@@ -24,7 +24,10 @@ class PropertyOffer(models.Model):
         compute="_compute_validity_date",
         inverse="_inverse_date_deadline"
     )
-
+    _check_price = models.Constraint(
+        "CHECK(price > 0)",
+        "The price must be positive."
+    )
     @api.depends("validity")
     def _compute_validity_date(self):
         for record in self:
@@ -45,6 +48,7 @@ class PropertyOffer(models.Model):
         for record in self:
             record.status = "accepted"
             record.property_id.bayer_id = record.partner_id
+            record.property_id.selling_price = record.price
         return True
 
     def action_refuse_offer(self):
