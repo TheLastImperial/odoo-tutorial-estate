@@ -12,7 +12,8 @@ class PropertyOffer(models.Model):
         string="Status",
         selection=[
             ("accepted", "Accepted"), ("refused", "Refused")
-        ]
+        ],
+        readonly=True
     )
     partner_id = fields.Many2one("res.partner",
         string="Partner",
@@ -24,6 +25,12 @@ class PropertyOffer(models.Model):
         compute="_compute_validity_date",
         inverse="_inverse_date_deadline"
     )
+    property_type_id = fields.Many2one(
+        related="property_id.property_type_id",
+        store=True
+    )
+
+    _order = "price desc"
     _check_price = models.Constraint(
         "CHECK(price > 0)",
         "The price must be positive."

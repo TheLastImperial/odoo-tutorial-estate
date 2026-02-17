@@ -58,6 +58,8 @@ class Property(models.Model):
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     total_area = fields.Float(compute="_compute_total_area")
     best_price = fields.Float(compute="_compute_best_price")
+
+    _order = "id desc"
     _check_expected_price = models.Constraint(
         "CHECK(expected_price > 0)",
         "The price must be positive."

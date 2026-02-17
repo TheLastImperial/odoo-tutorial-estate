@@ -6,12 +6,46 @@
         <field name="view_mode">list</field>
     </record>
 
+    <record id="estate_property_type_list_view" model="ir.ui.view">
+        <field name="name">estate.property.type.list.view</field>
+        <field name="model">estate.property.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="offer_count" string="Total"/>
+            </list>
+        </field>
+
+    </record>
+
     <record id="estate_property_type_create_view" model="ir.ui.view">
         <field name="name">estate.property.type.create.view</field>
         <field name="model">estate.property.type</field>
         <field name="arch" type="xml">
             <form string="Property Type">
+                <div class="oe_button_box">
+                    <button class="oe_stat_button"
+                        name="action_open_related_offers"
+                        type="object"
+                        string="Offers"
+                    >
+                        <field name="offer_ids" widget="statinfo" string=" Offers"/>
+                    </button>
+                </div>
+                <field name="sequence" widget="handle"/>
                 <field name="name" string="Name"/>
+                <field name="offer_count" string="Total"/>
+                <notebook>
+                    <page string="Properties">
+                        <field name="property_ids">
+                            <list>
+                                <field name="name"/>
+                                <field name="expected_price"/>
+                                <field name="state"/>
+                            </list>
+                        </field>
+                    </page>
+                </notebook>
             </form>
         </field>
     </record>

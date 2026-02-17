@@ -4,14 +4,19 @@
     <record id="list_estate_property_model_action" model="ir.actions.act_window">
         <field name="name">Properties</field>
         <field name="res_model">estate.property</field>
-        <field name="view_mode">list</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'search_default_available': True, 'search_default_current': True}</field>
     </record>
 
     <record id="estate_property_list_view" model="ir.ui.view">
         <field name="name">estate.property.list.view</field>
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
-           <list string="Properties">
+           <list string="Properties"
+            decoration-muted="state=='sold'"
+            decoration-success="state in ('offer_accepted', 'offer_received')"
+            decoration-bf="state=='offer_accepted'"
+           >
                 <field string="Title" name="name"/>
                 <field string="State" name="state"/>
                 <field string="Postcode" name="postcode"/>
@@ -33,21 +38,24 @@
                     <button
                         name="action_cancel_sell"
                         type="object" string="Cancel"
+                        invisible="state in ('sold', 'cancelled')"
                     />
                     <button
                         name="action_sold"
                         type="object" string="Sold"
+                        invisible="state in ('sold', 'cancelled')"
                     />
+                    <field name="state" widget="statusbar" />
                 </header>
                 <sheet>
                     <group>
                         <group>
                             <field name="name"/>
-                            <field name="property_type_id"/>
+                            <field name="property_type_id" options="{'can_create': false, 'can_write':false}"/>
                             <field name="postcode" />
                             <field name="date_availability" />
                             <field name="state" />
-                            <field name="tag_ids" widget="many2many_tags"/>
+                            <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
                         <group>
                             <field name="last_seen"/>
@@ -65,13 +73,22 @@
                                 <field name="facades"/>
                                 <field name="garage"/>
                                 <field name="garden"/>
-                                <field name="garden_area"/>
-                                <field name="garden_orientation"/>
+                                <field name="garden_area" invisible="not garden"/>
+                                <field name="garden_orientation" invisible="not garden"/>
                                 <field name="total_area"/>
                             </group>
                         </page>
                         <page string="Offers">
-                            <field name="offer_ids" widget="one2many_tag"/>
+                            <field name="offer_ids" widget="one2many_tag"
+                                options="
+                                {'create': 
+                                [
+                                    ['state', '!=', 'sold'], 
+                                    ['state', '!=', 'cancelled'],
+                                    ['state', '!=', 'offer_accepted']
+                                ]
+                                }"
+                            />
                         </page>
                         <page string="Other Info">
                             <group>
@@ -92,6 +109,11 @@
             <search string="Search">
                 <field name="name" string="Name" />
                 <separator/>
+                <filter
+                    string="Living Area"
+                    name="living_area"
+                    domain="[('living_area', '>=', self)]"
+                />
                 <filter
                     string="Available"
                     name="available"
