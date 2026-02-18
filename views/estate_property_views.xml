@@ -13,6 +13,7 @@
         <field name="model">estate.property</field>
         <field name="arch" type="xml">
            <list string="Properties"
+            delete="true"
             decoration-muted="state=='sold'"
             decoration-success="state in ('offer_accepted', 'offer_received')"
             decoration-bf="state=='offer_accepted'"

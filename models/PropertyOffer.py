@@ -2,6 +2,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models
+from odoo.exceptions import ValidationError
+
 class PropertyOffer(models.Model):
     _name = "estate.property.offer"
     _description = """
@@ -35,6 +37,24 @@ class PropertyOffer(models.Model):
         "CHECK(price > 0)",
         "The price must be positive."
     )
+    @api.model
+    def create(self, vals_list):
+        record = vals_list[0]
+        property_id = vals_list[0]["property_id"]
+        offers = self.env["estate.property.offer"].search(
+            [('property_id', '=', property_id)]
+        )
+        if offers:
+            prices = offers.mapped("price")
+            best_price = max(prices)
+            if record["price"] < best_price:
+                raise ValidationError(
+                    Exception("You most set a better offer.")
+                )
+        new_offer = super().create(vals_list)
+        new_offer.property_id.state="offer_received"
+        return new_offer
+
     @api.depends("validity")
     def _compute_validity_date(self):
         for record in self:

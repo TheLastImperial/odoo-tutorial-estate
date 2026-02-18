@@ -98,6 +98,12 @@ class Property(models.Model):
            self.garden_area = 0
            self.garden_orientation = None
 
+    @api.ondelete(at_uninstall=False)
+    def _unlink_except_invalid_state(self):
+        for record in self:
+            if(record.state in ('new', 'cancelled')):
+                raise UserError(Exception("Invalid state to delete."))
+
     def action_cancel_sell(self):
         for record in self:
             if record.state == "sold":
