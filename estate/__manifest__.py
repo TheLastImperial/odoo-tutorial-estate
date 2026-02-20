@@ -25,4 +25,7 @@
         'views/inherited_model_view.xml',
         'views/estate_menu_views.xml',
     ],
+    'demo': [
+        'demo/demo_data.xml',
+    ],
 }

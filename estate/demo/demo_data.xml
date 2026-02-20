@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<odoo>
+    <data noupdate="1">
+        <record id="tag" model="estate.property.tag">
+            <field name="name">Tag</field>
+        </record>
+        <record id="type" model="estate.property.type">
+            <field name="name">Type</field>
+        </record>
+    </data>
+</odoo>
