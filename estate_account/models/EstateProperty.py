@@ -3,10 +3,11 @@ from odoo import fields, models
 class EstateProperty(models.Model):
     _inherit = "estate.property"
     def action_sold(self):
-
+        if not self.check_access('write'):
+            print("No puede actualizar")
         # partner_id = self.env['res.partner'].search([('name', '=', 'ClienteCoorporativo')], limit=1).id
         # product_id = self.env['product.product'].search([('name', '=', 'Your Product Name')], limit=1).id
-        journal = self.env['account.journal'].search([('type', '=', 'sale')], limit=1) # Get a sales journal
+        journal = self.env['account.journal'].sudo().search([('type', '=', 'sale')], limit=1) # Get a sales journal
         if not self.selling_price:
             self.selling_price = self.best_price
 
@@ -36,7 +37,7 @@ class EstateProperty(models.Model):
         }
 
         # Create invoice
-        self.env['account.move'].create(invoice_vals)
+        self.env['account.move'].sudo().create(invoice_vals)
 
         return super().action_sold()
 

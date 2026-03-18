@@ -13,8 +13,10 @@
                 </page>
             </page> -->
 
-            <xpath expr="//page[@name='page_security']" position="after">
-                <page string="Properties">
+            <xpath expr="//page[@name='page_security']"
+                position="after"
+                >
+                <page string="Properties" groups="estate.estate_group_user">
                     <field name="property_ids"/>
                 </page>
             </xpath>

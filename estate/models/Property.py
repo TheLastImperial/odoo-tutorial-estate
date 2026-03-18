@@ -52,8 +52,19 @@ class Property(models.Model):
     salesperson_id = fields.Many2one(
         "res.users",
         string="Salesperson",
-        default= lambda self: self.env.user
+        # default= lambda self: self.env.user
     )
+    # self.env.company: CompanyThe currently active company as
+    #                   selected in the user interface's company switcher.
+    # self.env.user.company_id: The default company assigned to the user in
+    #                           their user preferences, which does not change
+    #                           when switching companies in the UI.
+    company_id = fields.Many2one(
+        "res.company",
+        string="Company",
+        default=lambda self: self.env.company,
+    )
+
     tag_ids = fields.Many2many("estate.property.tag", string="Tags")
     offer_ids = fields.One2many("estate.property.offer", "property_id", string="Offers")
     total_area = fields.Float(compute="_compute_total_area")

@@ -6,7 +6,9 @@
             name="Advertisements"
             action="list_estate_property_model_action"
         />
-        <menuitem id="estate_property_type_menu" name="Settings" >
+        <menuitem id="estate_property_type_menu"
+            name="Settings"
+            groups="estate.estate_group_manager">
             <menuitem
                 id="list_estate_property_type_menu_action"
                 action="list_estate_property_type_model_action"
