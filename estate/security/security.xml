@@ -15,6 +15,7 @@
         <field name="comment">Manager Real Estate.</field>
         <field name="implied_ids" eval="[(4, ref('estate_group_user'))]"/>
         <field name="privilege_id" ref="groups_privilege_real_estate"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
     <record id="rule_agent" model="ir.rule">

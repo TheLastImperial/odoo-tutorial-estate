@@ -21,6 +21,8 @@
         'data/data.xml',
         'security/security.xml',
         'security/ir.model.access.csv',
+        'report/estate_property_templates.xml',
+        'report/estate_property_reports.xml',
         'views/estate_property_views.xml',
         'views/estate_property_type_views.xml',
         'views/estate_property_tag_views.xml',

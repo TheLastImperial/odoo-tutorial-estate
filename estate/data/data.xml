@@ -19,8 +19,9 @@
         <field name="garden_area">100000</field>
         <field name="garden_orientation">south</field>
         <field name="property_type_id" ref="res"/>
+        <field name="salesperson_id" ref="base.user_admin"/>
     </record>
-    <record id="property1" model="estate.property">
+    <record id="property2" model="estate.property">
         <field name="name">Trailer home</field>
         <field name="state">cancelled</field>
         <field name="description">Home in a trailer park</field>
@@ -70,6 +71,7 @@
         <field name="facades">4</field>
         <field name="garage">False</field>
         <field name="property_type_id" ref="res"/>
+        <field name="salesperson_id" ref="base.user_admin"/>
         <field name="offer_ids" eval="[
             Command.create({
                 'partner_id': ref('seller'),

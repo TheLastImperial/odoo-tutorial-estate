@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<odoo>
+    <record id="report_estate_property" model="ir.actions.report">
+        <field name="name">Property report</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">estate.report_property_offers</field>
+        <field name="report_file">estate.report_property_offers</field>
+        <field name="print_report_name">RealEstateProperties</field>
+        <!-- <field name="paperformat_id" ref="event.paperformat_euro_lowmargin"/> -->
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_estate_property_inherited" model="ir.actions.report">
+        <field name="name">Property report inherited</field>
+        <field name="model">estate.property</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">estate.report_property_offers_inherit</field>
+        <field name="report_file">estate.report_property_offers_inherit</field>
+        <field name="print_report_name">RealEstateProperties</field>
+        <!-- <field name="paperformat_id" ref="event.paperformat_euro_lowmargin"/> -->
+        <field name="binding_model_id" ref="model_estate_property"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="report_estate_property_seller" model="ir.actions.report">
+        <field name="name">Seller report</field>
+        <field name="model">res.users</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">estate.report_seller_properties</field>
+        <field name="report_file">estate.report_seller_properties</field>
+        <field name="print_report_name">SellerRealEstateProperties</field>
+        <field name="binding_model_id" ref="base.model_res_users"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>
